@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import NotFound from './screens/notFound/notFound';
+import Inicio from './screens/inicio/inicio';
 
 function App() {
-  const [usuario, setUsuario]= useState ('');
+  /*const [usuario, setUsuario]= useState ('');
 
   useEffect(() => {
     axios.get('http://localhost:8080/hello')
@@ -19,6 +21,13 @@ function App() {
     <div>
       <p>Bienvenido, {usuario}</p>
     </div>
+  );*/
+
+  return (
+    <Routes>
+      <Route path="/" element={<Inicio/>}></Route>
+      <Route path="/*" element={<NotFound/>}></Route>
+    </Routes>
   );
 }
 
