@@ -1,0 +1,28 @@
+.contFooter {
+    background-color: #FFF5E4;
+    height: 100px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    justify-items: center;
+}
+
+.enlacesLegales{
+    width: 600px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.enlacesLegales a:hover{
+    color: #EE6983;
+    text-decoration: underline;
+}
+
+
+
+/*temporal*/
+.redes{
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+}

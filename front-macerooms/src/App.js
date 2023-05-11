@@ -1,10 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from './screens/notFound/notFound';
 import Inicio from './screens/inicio/inicio';
+import Container from './screens/container/container';
 
 function App() {
   /*const [usuario, setUsuario]= useState ('');
@@ -25,8 +23,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Inicio/>}></Route>
-      <Route path="/*" element={<NotFound/>}></Route>
+      <Route path='/' element={<Container/>}>
+        <Route path="*" element={<NotFound/>}></Route>
+        <Route index element={<Inicio/>}></Route>
+      </Route>
     </Routes>
   );
 }
