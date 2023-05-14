@@ -1,0 +1,68 @@
+package macerooms.app.servicio;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import macerooms.app.modelo.Usuario;
+
+@Service
+public class UsuarioServicio {
+
+	@Autowired
+	private UsuarioRepositorio userRepositorio;
+
+	private static final String SECRET_KEY = "claveSuperSecretaclaveSuperSecretaclaveSuperSecretaclaveSuperSecretaclaveSuperSecreta"; // Clave secreta para firmar el token
+
+	//Registro
+	@SuppressWarnings("deprecation")
+	public String registro(Usuario usuario) {
+		if(userRepositorio.findByEmail(usuario.getEmail()) != null) {
+			return null;
+		}
+		
+		try {
+			// Creación del token
+			usuario.setToken(Jwts.builder().setSubject(usuario.getEmail())
+					.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact());
+			
+			// Cifrado de la password
+			if(!usuario.getContrasena().isBlank()) {
+				usuario.setContrasena(BCrypt.hashpw(usuario.getContrasena(),BCrypt.gensalt()));
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("usuario creado "+usuario.toString());
+
+		userRepositorio.save(usuario);
+		
+		return usuario.getToken();
+	}
+
+	//Login
+	@SuppressWarnings("deprecation")
+	public String login(String email, String contrasena) {
+		Usuario usuario = userRepositorio.findByEmail(email);
+		if(usuario != null) {
+			if(BCrypt.checkpw(contrasena,usuario.getContrasena())) {
+				usuario.setToken(Jwts.builder().setSubject(usuario.getEmail())
+						.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact());
+				userRepositorio.save(usuario);
+				
+			}else {
+				return null;
+			}
+			
+		}else {
+			return null;
+		}
+		
+		return usuario.getToken();
+	}
+	
+}
