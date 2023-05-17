@@ -1,8 +1,9 @@
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from './screens/notFound/notFound';
 import Inicio from './screens/inicio/inicio';
 import Container from './screens/container/container';
+import Login from './screens/login/login';
+import Register from './screens/register/register';
 
 function App() {
   /*const [usuario, setUsuario]= useState ('');
@@ -26,6 +27,8 @@ function App() {
       <Route path='/' element={<Container/>}>
         <Route path="*" element={<NotFound/>}></Route>
         <Route index element={<Inicio/>}></Route>
+        <Route path="login" element={<Login/>}></Route>
+        <Route path="registro" element={<Register/>}></Route>
       </Route>
     </Routes>
   );

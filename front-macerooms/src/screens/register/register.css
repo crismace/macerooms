@@ -1,0 +1,35 @@
+.contenedorRegistro {
+    background-color: mistyrose;
+    margin: 5% 21% 5% 21%;
+    padding: 1.8% 0;
+    text-align: center;
+}
+
+.formularioRegistro {
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formularioRegistro label {
+    margin-bottom: 5px;
+}
+
+.formularioRegistro input {
+    margin-bottom: 10px;
+}
+
+.formularioRegistro input[type="text"], .formularioRegistro input[type="email"], .formularioRegistro input[type="password"] {
+    height: 30px;
+    width: 30%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.formularioRegistro input[type="submit"] {
+    height: 30px;
+    width: 10%;
+    background-color: white;
+    border: 1px solid black;
+}

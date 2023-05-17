@@ -1,0 +1,35 @@
+.contenedorSesion {
+    background-color: mistyrose;
+    margin: 5% 21% 5% 21%;
+    padding: 1.8% 0;
+    text-align: center;
+}
+
+.formularioLogin{
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formularioLogin label {
+    margin-bottom: 5px;
+}
+
+.formularioLogin input {
+    margin-bottom: 10px;
+}
+
+.formularioLogin input[type="email"], .formularioLogin input[type="password"] {
+    height: 30px;
+    width: 30%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.formularioLogin input[type="submit"] {
+    height: 30px;
+    width: 10%;
+    background-color: white;
+    border: 1px solid black;
+}
