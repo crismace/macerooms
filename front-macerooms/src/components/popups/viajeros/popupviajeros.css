@@ -1,0 +1,57 @@
+.viajeros {
+    width: 15%;
+    background-color: white;
+    position: absolute;
+    left: 51%;
+    top: 23%;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.viajeros button {
+    background-color: #FFF5E4;
+}
+
+.cantidad, .cantidad .tipo, .controlador {
+    display: grid;
+    align-items: center;
+}
+
+.cantidad {
+    grid-template-rows: auto auto;
+}
+
+.cantidad .tipo {
+    grid-template-columns: auto auto;
+}
+
+.cantidad .tipo:hover {
+    background-color: #ffe4e1;
+}
+
+.tipo .controlador p {
+    background-color: white;
+}
+
+.tipo:nth-child(2) > p {
+    margin-right: 15.5px;
+}
+
+.controlador {
+    grid-template-columns: 30px 35px 30px;
+}
+
+.controlador button {
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+}
+
+.controlador p {
+    height: 28px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

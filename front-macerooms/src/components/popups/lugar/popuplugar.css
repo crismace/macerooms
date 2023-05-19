@@ -1,0 +1,35 @@
+.lugar {
+    width: 15%;
+    background-color: white;
+    position: absolute;
+    left: 31%;
+    top: 23%;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.sitios {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+}
+
+.sitios div {
+    width: 130px;
+    height: 150px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.sitios div:hover {
+    background-color: #ffe4e1;;
+}
+
+.sitios img {
+    width: 100px;
+    height: 100px;
+}
+
+.sitios p {
+    margin: 0px;
+}

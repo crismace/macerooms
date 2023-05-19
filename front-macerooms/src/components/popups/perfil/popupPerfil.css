@@ -1,0 +1,26 @@
+.perfil {
+    background-color: white;
+    position: absolute;
+    left: 69.8%;
+    top: 13%;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.perfil div {
+    height: 50px;
+    width: 200px;
+    line-height: 50px;
+}
+
+.registro {
+    border-bottom: 1px solid black;
+}
+
+.perfil div:hover {
+    background-color: #ffe4e1;
+}
+
+.perfil div a:hover {
+    text-decoration: none;
+}
