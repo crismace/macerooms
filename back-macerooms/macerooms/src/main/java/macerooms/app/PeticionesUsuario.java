@@ -14,7 +14,7 @@ import macerooms.app.servicio.UsuarioServicio;
 
 @RestController
 
-public class Peticiones {
+public class PeticionesUsuario {
 
 	@Autowired
 	private UsuarioServicio servicio;
@@ -28,7 +28,8 @@ public class Peticiones {
 	@PostMapping("/registro")
 	public ResponseEntity<String> registro(@RequestBody Usuario usuario) {
 		String token = servicio.registro(usuario);
-		
+		System.out.println("El usuario "+usuario.getEmail()+" intenta registrar");
+
 		if(token == null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("");
 		}
@@ -39,7 +40,7 @@ public class Peticiones {
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody Map<String, String> json) {
 		String token = servicio.login(json.get("email"), json.get("contrasena"));
-		
+		System.out.println("El usuario "+json.get("email")+" intenta inciar sesión");
 		if(token == null) {
 			return ResponseEntity.badRequest().body("");
 		}
