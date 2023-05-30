@@ -18,7 +18,7 @@ const NotFound = () => {
 
                 <button onClick={onClick}>Volver a inicio</button>
             </div>
-            <img src="images/not-found.jpg" className="fotoNotFound"></img>
+            <img src="/images/not-found.jpg" className="fotoNotFound"></img>
         </div>
     ); 
   }

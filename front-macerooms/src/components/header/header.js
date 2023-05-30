@@ -48,10 +48,10 @@ const Header = (props) => {
     return(
         <div className="contHeader">
             <div className="info">
-                <a href="/"><img className="logo" src="images/logo.png"></img></a>
+                <a href="/"><img className="logo" src="/images/logo.png"></img></a>
 
                 <div className="usuario" >
-                    <img src="images/icono-casa.png" onClick={() => setShowPopUpPerfil(true)}></img>
+                    <img src="/images/icono-casa.png" onClick={() => setShowPopUpPerfil(true)}></img>
                     <PopUpPerfil isOpen={showPopUpPerfil} onClose={onClosePerfil} logged={props.logged}></PopUpPerfil>
                 </div>
 

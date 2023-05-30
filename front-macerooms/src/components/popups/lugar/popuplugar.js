@@ -47,19 +47,19 @@ const PopUpLugar = ({provincia, setProvincia, isOpen, onClose}) => {
 
                 <div className='sitios'>
                     <div onClick={onClickCoruna}>
-                        <img src="images/acoruna.png"></img>
+                        <img src="/images/acoruna.png"></img>
                         <p>A Coruña</p>
                     </div>
                     <div onClick={onClickLugo}>
-                        <img src="images/lugo.png"></img>
+                        <img src="/images/lugo.png"></img>
                         <p>Lugo</p>
                     </div>
                     <div onClick={onClickPontevedra}>
-                        <img src="images/pontevedra.png"></img>
+                        <img src="/images/pontevedra.png"></img>
                         <p>Pontevedra</p>
                     </div>
                     <div onClick={onClickOurense}>
-                        <img src="images/ourense.png"></img>
+                        <img src="/images/ourense.png"></img>
                         <p>Ourense</p>
                     </div>
                 </div>
