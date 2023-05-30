@@ -19,12 +19,14 @@ public class Usuario {
     private String apellidos;
     @Column(unique=true)
     private String email;
+    @Column(name = "token")
     private String token;
-    // Constructor vacío (requerido por JPA)
+    @Column(columnDefinition = "boolean default false")
+    private Boolean esAnfitrion;
+    
     public Usuario() {
     }
     
-    // Constructor con parámetros
     public Usuario(String nombre, String contrasena, String apellidos, String email) {
         this.nombre = nombre;
         this.contrasena = contrasena;
@@ -32,10 +34,21 @@ public class Usuario {
         this.email = email;
     }
     
-    @Override
+    public Usuario(String nombre, String contrasena, String apellidos, String email,String token,Boolean esAnfitrion) {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.token = token;
+        this.esAnfitrion = esAnfitrion;
+    }
+    
+
+
+	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", contrasena=" + contrasena + ", apellidos=" + apellidos
-				+ ", email=" + email + ", token=" + token + "]";
+				+ ", email=" + email + ", token=" + token + ", esAnfitrion=" + esAnfitrion + "]";
 	}
 
 	// Getters y setters
@@ -85,6 +98,14 @@ public class Usuario {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public Boolean getEsAnfitrion() {
+		return esAnfitrion;
+	}
+
+	public void setEsAnfitrion(Boolean esAnfitrion) {
+		this.esAnfitrion = esAnfitrion;
 	}
     
 }

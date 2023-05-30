@@ -32,18 +32,16 @@ public class Alojamiento {
 	private String normas;
 
 	private String latitud;
-	private String altitud;
+	private String longitud;
 
 	@Nonnull
 	private int numMaxAdultos;
 	@Nonnull
 	private int numMaxNinhos;
 	@Nonnull
-	private int numeroCocinas;
-	@Nonnull
 	private int numeroBanhos;
 	@Nonnull
-	private int numeroDormitorios;
+	private int numeroCamas;
 	private int numeroHabitaciones;
 	@Nonnull
 	private String provincia;
@@ -70,28 +68,25 @@ public class Alojamiento {
 	@Override
 	public String toString() {
 		return "Alojamiento [id=" + id + ", anfitrion=" + anfitrion + ", titulo=" + titulo + ", descripcion="
-				+ descripcion + ", normas=" + normas + ", latitud=" + latitud + ", altitud=" + altitud
-				+ ", numMaxAdultos=" + numMaxAdultos + ", numMaxNinhos=" + numMaxNinhos + ", numeroCocinas="
-				+ numeroCocinas + ", numeroBanhos=" + numeroBanhos + ", numeroDormitorios=" + numeroDormitorios
-				+ ", numeroHabitaciones=" + numeroHabitaciones + ", provincia=" + provincia + ", precio=" + precio
-				+ ", gastosLimpieza=" + gastosLimpieza + ", comision=" + comision + ", imagenPortada=" + imagenPortada
-				+ ", imagenes=" + imagenes + "]";
+				+ descripcion + ", normas=" + normas + ", latitud=" + latitud + ", longitud=" + longitud
+				+ ", numMaxAdultos=" + numMaxAdultos + ", numMaxNinhos=" + numMaxNinhos + ", numeroBanhos="
+				+ numeroBanhos + ", numeroCamas=" + numeroCamas + ", numeroHabitaciones=" + numeroHabitaciones
+				+ ", provincia=" + provincia + ", precio=" + precio + ", gastosLimpieza=" + gastosLimpieza
+				+ ", comision=" + comision + ", imagenPortada=" + imagenPortada + ", imagenes=" + imagenes + "]";
 	}
 
-	public Alojamiento(String titulo, String descripcion, String normas, String latitud, String altitud,
-			int numMaxAdultos, int numMaxNinhos, int numeroCocinas, int numeroBanhos, int numeroDormitorios,
-			int numeroHabitaciones, String provincia, BigDecimal precio, BigDecimal gastosLimpieza,
-			BigDecimal comision) {
+	public Alojamiento(String titulo, String descripcion, String normas, String latitud, String longitud,
+			int numMaxAdultos, int numMaxNinhos, int numeroBanhos, int numeroCamas, int numeroHabitaciones,
+			String provincia, BigDecimal precio, BigDecimal gastosLimpieza, BigDecimal comision) {
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.normas = normas;
 		this.latitud = latitud;
-		this.altitud = altitud;
+		this.longitud = longitud;
 		this.numMaxAdultos = numMaxAdultos;
 		this.numMaxNinhos = numMaxNinhos;
-		this.numeroCocinas = numeroCocinas;
 		this.numeroBanhos = numeroBanhos;
-		this.numeroDormitorios = numeroDormitorios;
+		this.numeroCamas = numeroCamas;
 		this.numeroHabitaciones = numeroHabitaciones;
 		this.provincia = provincia;
 		this.precio = precio;
@@ -163,20 +158,12 @@ public class Alojamiento {
 		this.latitud = latitud;
 	}
 
-	public String getAltitud() {
-		return altitud;
+	public String getLongitud() {
+		return longitud;
 	}
 
-	public void setAltitud(String altitud) {
-		this.altitud = altitud;
-	}
-
-	public int getNumeroCocinas() {
-		return numeroCocinas;
-	}
-
-	public void setNumeroCocinas(int numeroCocinas) {
-		this.numeroCocinas = numeroCocinas;
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
 	}
 
 	public int getNumeroBanhos() {
@@ -187,12 +174,12 @@ public class Alojamiento {
 		this.numeroBanhos = numeroBanhos;
 	}
 
-	public int getNumeroDormitorios() {
-		return numeroDormitorios;
+	public int getNumeroCamas() {
+		return numeroCamas;
 	}
 
-	public void setNumeroDormitorios(int numeroDormitorios) {
-		this.numeroDormitorios = numeroDormitorios;
+	public void setNumeroCamas(int numeroCamas) {
+		this.numeroCamas = numeroCamas;
 	}
 
 	public int getNumeroHabitaciones() {

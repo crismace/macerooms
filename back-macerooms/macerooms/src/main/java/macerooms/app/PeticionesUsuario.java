@@ -48,4 +48,10 @@ public class PeticionesUsuario {
 		return ResponseEntity.ok(token);
 	}
 	
+	@PostMapping("/esAnfitrion")
+	public ResponseEntity<Boolean> esAnfitrion(@RequestBody Map<String,String> json){
+		Boolean esAnfitrion = servicio.esAnfitrion(json.get("token"));
+		return ResponseEntity.ok(esAnfitrion);
+	}
+	
 }
