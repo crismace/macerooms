@@ -4,6 +4,7 @@ import Inicio from './screens/inicio/inicio';
 import Container from './screens/container/container';
 import Login from './screens/login/login';
 import Register from './screens/register/register';
+import Alojamiento from './screens/alojamiento/alojamiento';
 
 function App() {
   /*const [usuario, setUsuario]= useState ('');
@@ -29,6 +30,7 @@ function App() {
         <Route index element={<Inicio/>}></Route>
         <Route path="login" element={<Login/>}></Route>
         <Route path="registro" element={<Register/>}></Route>
+        <Route path="alojamiento/:alojamientoId" element={<Alojamiento/>}></Route>
       </Route>
     </Routes>
   );

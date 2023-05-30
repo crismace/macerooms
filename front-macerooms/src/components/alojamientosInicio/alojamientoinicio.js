@@ -1,13 +1,20 @@
 import React from 'react';
-import '../alojamientosInicio/alojamientoinicio.css'
+import '../alojamientosInicio/alojamientoinicio.css';
+import { useNavigate } from 'react-router-dom';
 
-const Alojamiento = (props) => {
+const AlojamientoInicio = (props) => {
+  const navigate = useNavigate();
+
+  const irAlojamiento = () => {
+    navigate(`/alojamiento/${props.alojamiento.id}`);
+  }
+  
   return (
-    <div className="alojamiento">
-      <h2 className="alojamientoTitulo">{props.alojamiento.titulo}</h2>
-      <img className="alojamientoImagen" src={props.alojamiento.imagenBase64} />
+    <div className="alojamientoInicio" onClick={irAlojamiento}>
+      <h2 className="alojamientoInicioTitulo">{props.alojamiento.titulo}</h2>
+      <img className="alojamientoInicioImagen" src={props.alojamiento.imagenPortada} />
     </div>
   );
 };
 
-export default Alojamiento;
+export default AlojamientoInicio;
