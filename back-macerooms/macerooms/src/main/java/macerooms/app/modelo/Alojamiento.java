@@ -1,12 +1,7 @@
 package macerooms.app.modelo;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import macerooms.app.utils.Constantes;
 
 @Entity
@@ -54,13 +48,16 @@ public class Alojamiento {
 	private BigDecimal comision;
 	// El impuesto por defecto es IVA de 21 por ciento en el momento de crear este
 	// proyecto
-	public static final BigDecimal IVA = Constantes.IVA;
+	private final BigDecimal IVA = Constantes.IVA;
 	// Este campo es Lob ya que las imagenes pueden ocupar muchos caracteres
 
 	private String imagenPortada;
-	@JsonIgnoreProperties("alojamiento")
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<ImagenesAlojamiento> imagenes;
+
+	private String imagen1;
+
+	private String imagen2;
+
+	private String imagen3;
 
 	public Alojamiento() {
 	}
@@ -72,7 +69,8 @@ public class Alojamiento {
 				+ ", numMaxAdultos=" + numMaxAdultos + ", numMaxNinhos=" + numMaxNinhos + ", numeroBanhos="
 				+ numeroBanhos + ", numeroCamas=" + numeroCamas + ", numeroHabitaciones=" + numeroHabitaciones
 				+ ", provincia=" + provincia + ", precio=" + precio + ", gastosLimpieza=" + gastosLimpieza
-				+ ", comision=" + comision + ", imagenPortada=" + imagenPortada + ", imagenes=" + imagenes + "]";
+				+ ", comision=" + comision + ", IVA=" + IVA + ", imagenPortada=" + imagenPortada + ", imagen1="
+				+ imagen1 + ", imagen2=" + imagen2 + ", imagen3=" + imagen3 + "]";
 	}
 
 	public Alojamiento(String titulo, String descripcion, String normas, String latitud, String longitud,
@@ -230,16 +228,32 @@ public class Alojamiento {
 		this.comision = comision;
 	}
 
-	public List<ImagenesAlojamiento> getImagenes() {
-		return imagenes;
-	}
-
-	public void setImagenes(List<ImagenesAlojamiento> imagenes) {
-		this.imagenes = imagenes;
-	}
-
-	public static BigDecimal getIva() {
+	public BigDecimal getIVA() {
 		return IVA;
+	}
+
+	public String getImagen1() {
+		return imagen1;
+	}
+
+	public void setImagen1(String imagen1) {
+		this.imagen1 = imagen1;
+	}
+
+	public String getImagen2() {
+		return imagen2;
+	}
+
+	public void setImagen2(String imagen2) {
+		this.imagen2 = imagen2;
+	}
+
+	public String getImagen3() {
+		return imagen3;
+	}
+
+	public void setImagen3(String imagen3) {
+		this.imagen3 = imagen3;
 	}
 
 }
