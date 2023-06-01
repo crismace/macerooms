@@ -48,7 +48,10 @@ public class PeticionesAlojamiento {
 		}
 
 		System.out.println("Se buscan alojamientos busqueda x parametros");
-		return servicio.alojamientosBusqueda(desde,hasta,provincia,numeroAdultos,numeroNinhos);
+		
+		ResponseEntity<Iterable<Alojamiento>>alojamientos = servicio.alojamientosBusqueda(desde,hasta,provincia,numeroAdultos,numeroNinhos);
+		
+		return alojamientos;
 	}
 	
 	@GetMapping("/buscarAlojamientosInicio")
@@ -62,9 +65,9 @@ public class PeticionesAlojamiento {
 		return  servicio.encontrarAlojamientoPorId(id);
 	}
 	
-	@GetMapping(path = "/encontrarAlojamientoPorUsuario", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<Iterable<Alojamiento>> encontrarAlojamientoPorUsuario (@RequestHeader(value=Constantes.TOKEN) String token){
-		return  servicio.encontrarAlojamientosPorUsuario(token);
+	@GetMapping(path = "/encontrarAlojamientoDelAnfitrion", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Iterable<Alojamiento>> encontrarAlojamientoDelAnfitrion (@RequestHeader(value=Constantes.TOKEN) String token){
+		return  servicio.encontrarAlojamientosPorAnfitrion(token);
 	}
 	
 	@PutMapping(path = "/actualizarAlojamiento", produces= {MediaType.APPLICATION_JSON_VALUE})
@@ -77,4 +80,41 @@ public class PeticionesAlojamiento {
 		return  servicio.borrar(id);
 	}
 	
+	@PostMapping(path = "/crearAlojamientoPrimeraVez", consumes = { MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Long> createAlojamientoPrimeraVez(
+			@RequestHeader(value=Constantes.TOKEN) String token,
+			@RequestBody Alojamiento alojamiento) {
+		System.out.println("Se publica alojamiento 1era vez");
+		return  servicio.publicarAlojamientoPrimeraVez(token,alojamiento);
+	}
+	
+	/**
+	 * Separamos las peticiones en 2
+	 * por un lado una peticion crea los datos del alojamiento
+	 * esta peticion devuelve el id del alojamiento
+	 * para realizar la segunda peticion que inserta las imagenes del alojamiento
+	 * la primera imagen sera la portada, el resto son imagenes del carrusel se 
+	 * pasara por parametro de url el id del alojamiento
+	 * El tope por bulto de imagen es 100 MB esta definido en applicationproperties
+	 */
+	@PostMapping(path = "/crearAlojamiento", consumes = { MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Long> crearAlojamiento(
+			@RequestHeader(value=Constantes.TOKEN) String token,
+			@RequestBody Alojamiento alojamiento) {
+		System.out.println("Se publica alojamiento");
+		return  servicio.publicarAlojamiento(token,alojamiento);
+	}
+	
+	@PostMapping(path = "/subirImagenes", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<Boolean> subirImagenes(
+			@RequestParam(name="id",required = true) Long id,
+			@RequestPart(name = "imagenPortada") MultipartFile imagenPortada,
+			@RequestPart(name = "imagen1", required = true) MultipartFile imagen1,
+			@RequestPart(name = "imagen2", required = true) MultipartFile imagen2,
+			@RequestPart(name = "imagen3", required = true) MultipartFile imagen3){
+		System.out.println("Se publican imagenes alojamiento");
+		ResponseEntity<Boolean> respuesta= servicio.subirImagenes(id, imagenPortada, imagen1, imagen2, imagen3);
+		System.out.println("Se terminan publican imagenes alojamiento");
+		return respuesta;
+	}
 }

@@ -22,6 +22,7 @@ import macerooms.app.modelo.Alojamiento;
 import macerooms.app.modelo.AlojamientoReducido;
 import macerooms.app.modelo.Reserva;
 import macerooms.app.modelo.Usuario;
+import macerooms.app.utils.ValidarProvincia;
 
 @Service
 public class AlojamientosServicio {
@@ -60,7 +61,7 @@ public class AlojamientosServicio {
 		 */
 
 		Iterable<Alojamiento> alojamientosXProvincia = null;
-		if (provincia != null) {
+		if (provincia != null && ValidarProvincia.validarProvincia(provincia)) {
 			alojamientosXProvincia = alojamientosRepositorio.findByProvincia(provincia);
 		} else {
 			alojamientosXProvincia = alojamientosRepositorio.findAll();
@@ -113,12 +114,72 @@ public class AlojamientosServicio {
 		return alojamientoReducidoRepositorio.findAll();
 	}
 
+	public ResponseEntity<Long> publicarAlojamientoPrimeraVez(String token, Alojamiento alojamiento) {
+		Usuario anfitrion = usuarioRepositorio.findByToken(token);
+		alojamiento.setAnfitrion(anfitrion);
+		alojamientosRepositorio.save(alojamiento);
+		anfitrion.setEsAnfitrion(true);
+		usuarioRepositorio.save(anfitrion);
+		System.out.println(alojamiento);
+		return ResponseEntity.ok(alojamiento.getId());
+	}
+	
+	public ResponseEntity<Long> publicarAlojamiento(String token, Alojamiento alojamiento) {
+		alojamiento.setAnfitrion(usuarioRepositorio.findByToken(token));
+		alojamientosRepositorio.save(alojamiento);
+		System.out.println(alojamiento);
+		return ResponseEntity.ok(alojamiento.getId());
+	}
+
+	public static String cogerExtensionDeImagen(MultipartFile imagen) {
+		String nombreFichero = imagen.getOriginalFilename();
+		if (nombreFichero != null) {
+			int extension = nombreFichero.lastIndexOf(".");
+			if (extension != -1) {
+				return nombreFichero.substring(extension + 1);
+			}
+		}
+		return null;
+	}
+
+	public ResponseEntity<Boolean> subirImagenes(Long id, MultipartFile imagenPortada, MultipartFile imagen1,
+			MultipartFile imagen2, MultipartFile imagen3) {
+		Alojamiento alojamiento = alojamientosRepositorio.findById(id).get();
+
+		String imagenPortadaNombreuuid = UUID.randomUUID().toString();
+		try {
+			Path path = Path.of(carpetaImagenes + File.separator + imagenPortadaNombreuuid + "."
+					+ cogerExtensionDeImagen(imagenPortada));
+			imagenPortada.transferTo(path);
+			alojamiento.setImagenPortada(rutaRelativaImagenes + path.getFileName());
+			imagenPortadaNombreuuid = UUID.randomUUID().toString();
+			path = Path.of(
+					carpetaImagenes + File.separator + imagenPortadaNombreuuid + "." + cogerExtensionDeImagen(imagen1));
+			imagen1.transferTo(path);
+			alojamiento.setImagen1(rutaRelativaImagenes + path.getFileName());
+			imagenPortadaNombreuuid = UUID.randomUUID().toString();
+			path = Path.of(
+					carpetaImagenes + File.separator + imagenPortadaNombreuuid + "." + cogerExtensionDeImagen(imagen2));
+			imagen2.transferTo(path);
+			alojamiento.setImagen2(rutaRelativaImagenes + path.getFileName());
+			imagenPortadaNombreuuid = UUID.randomUUID().toString();
+			path = Path.of(
+					carpetaImagenes + File.separator + imagenPortadaNombreuuid + "." + cogerExtensionDeImagen(imagen3));
+			imagen3.transferTo(path);
+			alojamiento.setImagen3(rutaRelativaImagenes + path.getFileName());
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+
+		alojamientosRepositorio.save(alojamiento);
+		return ResponseEntity.ok(alojamiento.getImagenPortada() != null);
+	}
 
 	public ResponseEntity<Alojamiento> encontrarAlojamientoPorId(Long id) {
 		return ResponseEntity.ok(alojamientosRepositorio.findById(id).get());
 	}
 
-	public ResponseEntity<Iterable<Alojamiento>> encontrarAlojamientosPorUsuario(String token) {
+	public ResponseEntity<Iterable<Alojamiento>> encontrarAlojamientosPorAnfitrion(String token) {
 		return ResponseEntity.ok(alojamientosRepositorio.findAllByAnfitrion(token));
 	}
 
