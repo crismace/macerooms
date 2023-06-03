@@ -22,11 +22,14 @@ import macerooms.app.modelo.Alojamiento;
 import macerooms.app.modelo.AlojamientoReducido;
 import macerooms.app.modelo.Reserva;
 import macerooms.app.modelo.Usuario;
+import macerooms.app.utils.AlojamientoHelper;
 import macerooms.app.utils.ValidarProvincia;
 
 @Service
 public class AlojamientosServicio {
 
+	
+	// Usamos la anotacion @Value para cargar propiedades del fichero application.properties (src/main/resources)
 	@Value("${carpetaImagenes}")
 	private String carpetaImagenes;
 	@Value("${rutaRelativaImagenes}")
@@ -46,6 +49,8 @@ public class AlojamientosServicio {
 
 	@PostConstruct
 	public void comprobarCarpetaImagenes() throws IOException {
+		// Este metodo es PostConstruct, se ejecuta cada vez que spring carga su contexto en el arranque
+		// Se encarga de comprobar que la ruta donde se guardan las imagenes existe y sino existe la crea
 		if (Files.notExists(Path.of(carpetaImagenes))) {
 			Files.createDirectory(Path.of(carpetaImagenes));
 		}
@@ -53,14 +58,10 @@ public class AlojamientosServicio {
 
 	public ResponseEntity<Iterable<Alojamiento>> alojamientosBusqueda(Date fechaDesde, Date fechaHasta,
 			String provincia, Integer numeroAdultos, Integer numeroNinhos) {
-		/**
-		 * Primero se busca por provincia Despues se traen las reservas para cada
-		 * alojamiento y se ve si hay disponibilidad Despues se comprueba si es
-		 * compatible con el numero de adultos y ninios de la busqueda se devuelven los
-		 * alojamientos
-		 */
-
+		// Este metodo se encarga de buscar los alojamientos
+		// Se filtra por cada uno de los campos si procede ya que todos son opcionales
 		Iterable<Alojamiento> alojamientosXProvincia = null;
+		// Se usa la clase de utilidad validar provincia ya que si no se especifica tiene valor pendiente
 		if (provincia != null && ValidarProvincia.validarProvincia(provincia)) {
 			alojamientosXProvincia = alojamientosRepositorio.findByProvincia(provincia);
 		} else {
@@ -115,6 +116,7 @@ public class AlojamientosServicio {
 	}
 
 	public ResponseEntity<Long> publicarAlojamientoPrimeraVez(String token, Alojamiento alojamiento) {
+		// Al ser la primera vez que el usuario crea un alojamiento se pone el usuario en modo anfitrion
 		Usuario anfitrion = usuarioRepositorio.findByToken(token);
 		alojamiento.setAnfitrion(anfitrion);
 		alojamientosRepositorio.save(alojamiento);
@@ -132,6 +134,7 @@ public class AlojamientosServicio {
 	}
 
 	public static String cogerExtensionDeImagen(MultipartFile imagen) {
+		// Se crea este metodo para obtener la extension del fichero de imagen que se sube
 		String nombreFichero = imagen.getOriginalFilename();
 		if (nombreFichero != null) {
 			int extension = nombreFichero.lastIndexOf(".");
@@ -145,28 +148,39 @@ public class AlojamientosServicio {
 	public ResponseEntity<Boolean> subirImagenes(Long id, MultipartFile imagenPortada, MultipartFile imagen1,
 			MultipartFile imagen2, MultipartFile imagen3) {
 		Alojamiento alojamiento = alojamientosRepositorio.findById(id).get();
-
-		String imagenPortadaNombreuuid = UUID.randomUUID().toString();
+		// Se crea imagen...UUid que genera un identificador unico aleatorio para guardar la imagen 
+		// En la carpeta de imagenes,  y se traspasa el fichero desde la peticion a la carpeta
+		String imagenPortadaNombreuuid = null;
+		Path path = null;
 		try {
-			Path path = Path.of(carpetaImagenes + File.separator + imagenPortadaNombreuuid + "."
-					+ cogerExtensionDeImagen(imagenPortada));
-			imagenPortada.transferTo(path);
-			alojamiento.setImagenPortada(rutaRelativaImagenes + path.getFileName());
-			imagenPortadaNombreuuid = UUID.randomUUID().toString();
-			path = Path.of(
-					carpetaImagenes + File.separator + imagenPortadaNombreuuid + "." + cogerExtensionDeImagen(imagen1));
-			imagen1.transferTo(path);
-			alojamiento.setImagen1(rutaRelativaImagenes + path.getFileName());
-			imagenPortadaNombreuuid = UUID.randomUUID().toString();
-			path = Path.of(
-					carpetaImagenes + File.separator + imagenPortadaNombreuuid + "." + cogerExtensionDeImagen(imagen2));
-			imagen2.transferTo(path);
-			alojamiento.setImagen2(rutaRelativaImagenes + path.getFileName());
-			imagenPortadaNombreuuid = UUID.randomUUID().toString();
-			path = Path.of(
-					carpetaImagenes + File.separator + imagenPortadaNombreuuid + "." + cogerExtensionDeImagen(imagen3));
-			imagen3.transferTo(path);
-			alojamiento.setImagen3(rutaRelativaImagenes + path.getFileName());
+			if (imagenPortada != null) {
+				imagenPortadaNombreuuid = UUID.randomUUID().toString();
+				path = Path.of(carpetaImagenes + File.separator + imagenPortadaNombreuuid + "."
+						+ cogerExtensionDeImagen(imagenPortada));
+				imagenPortada.transferTo(path);
+				alojamiento.setImagenPortada(rutaRelativaImagenes + path.getFileName());
+			}
+			if (imagen1 != null) {
+				imagenPortadaNombreuuid = UUID.randomUUID().toString();
+				path = Path.of(carpetaImagenes + File.separator + imagenPortadaNombreuuid + "."
+						+ cogerExtensionDeImagen(imagen1));
+				imagen1.transferTo(path);
+				alojamiento.setImagen1(rutaRelativaImagenes + path.getFileName());
+			}
+			if (imagen2 != null) {
+				imagenPortadaNombreuuid = UUID.randomUUID().toString();
+				path = Path.of(carpetaImagenes + File.separator + imagenPortadaNombreuuid + "."
+						+ cogerExtensionDeImagen(imagen2));
+				imagen2.transferTo(path);
+				alojamiento.setImagen2(rutaRelativaImagenes + path.getFileName());
+			}
+			if (imagen3 != null) {
+				imagenPortadaNombreuuid = UUID.randomUUID().toString();
+				path = Path.of(carpetaImagenes + File.separator + imagenPortadaNombreuuid + "."
+						+ cogerExtensionDeImagen(imagen3));
+				imagen3.transferTo(path);
+				alojamiento.setImagen3(rutaRelativaImagenes + path.getFileName());
+			}
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
@@ -180,16 +194,19 @@ public class AlojamientosServicio {
 	}
 
 	public ResponseEntity<Iterable<Alojamiento>> encontrarAlojamientosPorAnfitrion(String token) {
-		return ResponseEntity.ok(alojamientosRepositorio.findAllByAnfitrion(token));
+		return ResponseEntity.ok(alojamientosRepositorio.findAllByAnfitrionToken(token));
 	}
 
-	public ResponseEntity<Alojamiento> actualizar(Alojamiento alojamiento) {
-		return ResponseEntity.ok(alojamientosRepositorio.save(alojamiento));
+	public ResponseEntity<Alojamiento> actualizar(Long id,Alojamiento alojamiento) {
+		Alojamiento a = alojamientosRepositorio.findById(id).get();
+		a = AlojamientoHelper.mapear(a, alojamiento);
+		return ResponseEntity.ok(alojamientosRepositorio.save(a));
 	}
 
 	public ResponseEntity<Boolean> borrar(Long id) {
-		alojamientosRepositorio.delete(alojamientosRepositorio.findById(id).get());
-		return ResponseEntity.ok(alojamientosRepositorio.findById(id).get() != null);
+		System.out.println("se borra alojamiento con id : "+id);
+		alojamientosRepositorio.deleteById(id);
+		return ResponseEntity.ok(alojamientosRepositorio.findById(id).isPresent());
 	}
 
 }

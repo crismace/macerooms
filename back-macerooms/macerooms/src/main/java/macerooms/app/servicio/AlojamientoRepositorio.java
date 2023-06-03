@@ -9,7 +9,7 @@ import macerooms.app.modelo.Alojamiento;
 @Repository
 public interface AlojamientoRepositorio extends CrudRepository<Alojamiento, Long> {
 	@Query("SELECT a FROM Alojamiento a WHERE a.anfitrion.token = :token")
-	public Iterable<Alojamiento> findAllByAnfitrion(@Param("token") String token);
+	public Iterable<Alojamiento> findAllByAnfitrionToken(@Param("token") String token);
 
 	public Iterable<Alojamiento> findByProvincia(String provincia);
 }

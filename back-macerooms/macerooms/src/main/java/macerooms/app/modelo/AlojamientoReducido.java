@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "alojamiento")
 public class AlojamientoReducido {
+	// Se crea esta entidad para no pasar mas datos de los necesarios al front
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -38,8 +38,9 @@ public class PeticionesAlojamiento {
 			@RequestParam(required = false) String fechaHasta,
 			@RequestParam(required = false) String provincia,
 			@RequestParam(required = false) Integer numeroAdultos,
-			@RequestParam(required = false) Integer numeroNinhos
-			) throws ParseException {
+			@RequestParam(required = false) Integer numeroNinhos) throws ParseException {
+		
+		// La fecha de busqueda es opcional por eso se parsea solo si viene
 		Date desde = null;
 		Date hasta = null;
 		if(fechaDesde != null && fechaHasta != null) {
@@ -57,6 +58,7 @@ public class PeticionesAlojamiento {
 	@GetMapping("/buscarAlojamientosInicio")
 	public ResponseEntity<Iterable<AlojamientoReducido>> registro() {
 		System.out.println("Se buscan alojamientos inicio");
+		// Busca todos los alojamientos para la pantalla principal
 		return ResponseEntity.ok(servicio.alojamientosPantallaPrincipal());
 	}
 	
@@ -67,12 +69,15 @@ public class PeticionesAlojamiento {
 	
 	@GetMapping(path = "/encontrarAlojamientoDelAnfitrion", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Iterable<Alojamiento>> encontrarAlojamientoDelAnfitrion (@RequestHeader(value=Constantes.TOKEN) String token){
+		// Se buscan los alojamientos para los cuales el usuario es anfitrion
 		return  servicio.encontrarAlojamientosPorAnfitrion(token);
 	}
 	
-	@PutMapping(path = "/actualizarAlojamiento", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<Alojamiento> actualizarAlojamiento (@RequestBody Alojamiento alojamiento){
-		return  servicio.actualizar(alojamiento);
+	@PutMapping(path = "/actualizarAlojamiento/{id}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Alojamiento> actualizarAlojamiento (@PathVariable Long id,
+			@RequestBody Alojamiento alojamiento){
+		System.out.println("Se trata de actualizar el alojamiento"+alojamiento);
+		return  servicio.actualizar(id,alojamiento);
 	}
 	
 	@DeleteMapping("/borrarAlojamientoPorId/{id}")
@@ -84,23 +89,17 @@ public class PeticionesAlojamiento {
 	public ResponseEntity<Long> createAlojamientoPrimeraVez(
 			@RequestHeader(value=Constantes.TOKEN) String token,
 			@RequestBody Alojamiento alojamiento) {
+		// A diferencia de crearAlojamiento, este cambia el rol de usuario a anfitrion
 		System.out.println("Se publica alojamiento 1era vez");
 		return  servicio.publicarAlojamientoPrimeraVez(token,alojamiento);
 	}
 	
-	/**
-	 * Separamos las peticiones en 2
-	 * por un lado una peticion crea los datos del alojamiento
-	 * esta peticion devuelve el id del alojamiento
-	 * para realizar la segunda peticion que inserta las imagenes del alojamiento
-	 * la primera imagen sera la portada, el resto son imagenes del carrusel se 
-	 * pasara por parametro de url el id del alojamiento
-	 * El tope por bulto de imagen es 100 MB esta definido en applicationproperties
-	 */
 	@PostMapping(path = "/crearAlojamiento", consumes = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Long> crearAlojamiento(
 			@RequestHeader(value=Constantes.TOKEN) String token,
 			@RequestBody Alojamiento alojamiento) {
+		// La primera parte de la peticion de crear alojamiento es esta
+		// En esta peticion se envían los datos del alojamiento para guardarlos
 		System.out.println("Se publica alojamiento");
 		return  servicio.publicarAlojamiento(token,alojamiento);
 	}
@@ -108,10 +107,12 @@ public class PeticionesAlojamiento {
 	@PostMapping(path = "/subirImagenes", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<Boolean> subirImagenes(
 			@RequestParam(name="id",required = true) Long id,
-			@RequestPart(name = "imagenPortada") MultipartFile imagenPortada,
-			@RequestPart(name = "imagen1", required = true) MultipartFile imagen1,
-			@RequestPart(name = "imagen2", required = true) MultipartFile imagen2,
-			@RequestPart(name = "imagen3", required = true) MultipartFile imagen3){
+			@RequestPart(name = "imagenPortada", required = false) MultipartFile imagenPortada,
+			@RequestPart(name = "imagen1", required = false) MultipartFile imagen1,
+			@RequestPart(name = "imagen2", required = false) MultipartFile imagen2,
+			@RequestPart(name = "imagen3", required = false) MultipartFile imagen3){
+		// Esta es la segunda peticion tanto de crearAlojamiento,crearAlojamientoPrimeraVez y actualizarAlojamiento, se encarga
+		// de subir las imagenes a la carpeta de imagenes del servidor y guarda en la bbdd la ruta de la imagen
 		System.out.println("Se publican imagenes alojamiento");
 		ResponseEntity<Boolean> respuesta= servicio.subirImagenes(id, imagenPortada, imagen1, imagen2, imagen3);
 		System.out.println("Se terminan publican imagenes alojamiento");

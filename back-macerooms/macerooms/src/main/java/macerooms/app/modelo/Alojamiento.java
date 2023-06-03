@@ -39,7 +39,7 @@ public class Alojamiento {
 	private int numeroHabitaciones;
 	@Nonnull
 	private String provincia;
-	// Usamos la clase java BigDecimal para dineroç
+	// Usamos la clase java BigDecimal para dinero
 	@Nonnull
 	private BigDecimal precio;
 	@Nonnull
@@ -49,7 +49,6 @@ public class Alojamiento {
 	// El impuesto por defecto es IVA de 21 por ciento en el momento de crear este
 	// proyecto
 	private final BigDecimal IVA = Constantes.IVA;
-	// Este campo es Lob ya que las imagenes pueden ocupar muchos caracteres
 
 	private String imagenPortada;
 
