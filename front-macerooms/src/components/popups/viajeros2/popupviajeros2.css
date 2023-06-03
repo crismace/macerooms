@@ -1,54 +1,54 @@
-.viajeros {
+.viajeros2 {
     width: 15%;
     background-color: white;
     position: absolute;
-    left: 51%;
-    top: 23%;
     z-index: 999;
+    top: 465px;
+    right: 350px;
     border: 2px solid black;
     text-align: center;
 }
 
-.viajeros button {
+.viajeros2 button {
     background-color: #FFF5E4;
 }
 
-.cantidad, .cantidad .tipo, .controlador {
+.cantidad2, .cantidad2 .tipo2, .controlador2 {
     display: grid;
     align-items: center;
 }
 
-.cantidad {
+.cantidad2 {
     grid-template-rows: auto auto;
 }
 
-.cantidad .tipo {
+.cantidad2 .tipo2 {
     grid-template-columns: auto auto;
 }
 
-.cantidad .tipo:hover {
+.cantidad2 .tipo2:hover {
     background-color: #ffe4e1;
 }
 
-.tipo .controlador p {
+.tipo2 .controlador2 p {
     background-color: white;
 }
 
-.tipo:nth-child(2) > p {
+.tipo2:nth-child(2) > p {
     margin-right: 15.5px;
 }
 
-.controlador {
+.controlador2 {
     grid-template-columns: 30px 35px 30px;
 }
 
-.controlador button {
+.controlador2 button {
     height: 30px;
     width: 30px;
     border: 1px solid black;
 }
 
-.controlador p {
+.controlador2 p {
     height: 28px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;

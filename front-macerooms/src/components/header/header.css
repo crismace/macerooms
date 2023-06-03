@@ -21,6 +21,7 @@
 .buscador .boton {
     background-color: #ffe4e1;
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .buscador .botonBuscar {

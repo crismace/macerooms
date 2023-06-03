@@ -64,5 +64,9 @@ public class UsuarioServicio {
 		
 		return usuario.getToken();
 	}
+
+	public Boolean esAnfitrion(String token) {
+		return userRepositorio.findByToken(token).getEsAnfitrion();
+	}
 	
 }

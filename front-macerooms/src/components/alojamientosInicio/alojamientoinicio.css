@@ -1,4 +1,4 @@
-.alojamiento {
+.alojamientoInicio {
     border: 2px solid #ffe4e1;
     padding: 10px;
     text-align: center;
@@ -9,19 +9,20 @@
     margin-bottom: 5%;
     margin-right: 2%;
     margin-left: 2%;
+    cursor: pointer;
 }
 
-.alojamiento:hover {
+.alojamientoInicio:hover {
     background-color: #FFF5E4;
 }
 
-.alojamientoTitulo{
+.alojamientoInicioTitulo{
     margin-top: 10px;
     font-size: 18px;
     font-weight: bold;
 }
 
-.alojamientoImagen{
+.alojamientoInicioImagen{
     max-width: 100%;
     height: 200px;
     width: auto;

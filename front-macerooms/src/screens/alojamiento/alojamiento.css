@@ -1,0 +1,179 @@
+.alojamiento {
+    margin: 3% 10%;
+}
+
+.alojamiento h2 {
+    margin-top: 50px;
+}
+
+.alojamientoInfo {
+    display: flex;
+}
+
+.alojamientoIzquierda {
+    overflow: hidden;
+    width: 750px;
+}
+
+.carrusel {
+    height: 495px;
+    display: flex;
+    animation: carruselFotos 30s infinite;
+}
+
+.carrusel img {
+    width: 750px;
+    margin-right: 10px;
+}
+
+@keyframes carruselFotos {
+    0% {
+        transform: translateX(0px);
+    }
+    14% {
+        transform: translateX(0px);
+    }
+    15% {
+        transform: translateX(-760px);
+    }
+    28% {
+        transform: translateX(-760px);
+    }
+    29% {
+        transform: translateX(-1520px);
+    }
+    42% {
+        transform: translateX(-1520px);
+    }
+    43% {
+        transform: translateX(-2280px);
+    }
+    56% {
+        transform: translateX(-2280px);
+    }
+    57% {
+        transform: translateX(-1520px);
+    }
+    70% {
+        transform: translateX(-1520px);
+    }
+    71% {
+        transform: translateX(-760px);
+    }
+    84% {
+        transform: translateX(-760px);
+    }
+    85% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.listaImagenes {
+    display: flex;
+}
+
+.listaImagenes img{
+    width: 365px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.listaImagenes button {
+    background-color: #ffe4e1;
+    border: 1px solid black;
+}
+
+.listaImagenes button:first-child{
+    position: absolute;
+    top: 960px;
+    left: 190px;
+    z-index: 1;
+}
+
+.listaImagenes button:last-child{
+    position: absolute;
+    top: 960px;
+    right: 978px;
+    z-index: 1;
+}
+
+.carteles {
+    display: flex;
+    margin-top: 10px;
+}
+
+.carteles div {
+    height: 100px;
+    width: 236.6px;
+    background-color: #ffe4e1;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mapa {
+    height: 500px;
+    width: 1000px;
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+}
+
+.alojamientoDerecha {
+    background-color: #FFF5E4;
+    margin: 0px auto;
+    padding-top: 20px;
+    height: 250vh;
+    width: 520px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.contDerechaAlojamiento  {
+    width: 50%;
+}
+
+.botonReserva, .calculadora .boton, .contacto, .botonReservaNoLogin {
+    background-color: #ffe4e1;
+    border: 1px solid black;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.botonReservaNoLogin{
+    width: 200px;
+}
+
+.calculadora {
+    display: flex;
+    flex-direction: column;
+}
+
+.calculadora hr {
+    width: 100%;
+}
+
+.calculadora .boton {
+    margin-top: 20px;
+}
+
+.reserva {
+    background-color: #FFF5E4;
+    position: sticky;
+    top: 450px;
+    height: 100px;
+}
+
+.calculadora .react-datepicker-wrapper{
+    width: 100%!important;
+}
+
+.calculadora .react-datepicker-wrapper input {
+    width: 85.5%;
+}
