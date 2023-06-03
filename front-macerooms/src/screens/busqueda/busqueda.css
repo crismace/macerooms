@@ -1,0 +1,44 @@
+.contBusqueda {
+    margin-bottom: 3%;
+}
+
+.contBusqueda .titulo {
+    margin: 3% 10%;
+}
+
+.busqueda {
+    display: flex;
+}
+
+.alojamientosBusqueda {
+    width: 50%;
+    grid-template-columns: auto;
+    align-items: start;
+}
+
+.busquedaNoResultado {
+    margin-left: 19.5%;
+}
+
+.mapaBusqueda {
+    height: 1000px;
+    width: 50%;
+}
+
+.leaflet-tooltip.my-labels {
+    background-color: transparent;
+    border: transparent;
+    box-shadow: none;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.prueba:hover {
+    background-color: #FFF5E4;
+}
+
+.alojamientoMarkerImagen {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}

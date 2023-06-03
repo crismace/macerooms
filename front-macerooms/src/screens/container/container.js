@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const Container = () => {
+const Container = (props) => {
     const [logged, setLogged] = useState(false);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const Container = () => {
 
     return(
         <div>
-            <Header logged={logged} setLogged={setLogged}/>
+            <Header resultado={props.resultado} setResultado={props.setResultado} logged={logged} setLogged={setLogged}/>
             <Outlet/>
             <Footer/>
         </div>
