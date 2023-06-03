@@ -1,24 +1,27 @@
 import React from 'react';
 import { useState } from "react";
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
-import { addDays, subDays } from 'date-fns';
-import { MapContainer, TileLayer, useMap, Marker, Popup, Tooltip } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet'
 import PopUpViajeros2 from '../../components/popups/viajeros2/popupviajeros2';
 import "leaflet/dist/leaflet.css";
 import './alojamiento.css';
 
-const Alojamiento = () => {
+const Alojamiento = (props) => {
+  const navigate = useNavigate();
   const params = useParams();
 
+  /*Variables a guardar del alojamiento*/
+  const [alojamiento, setAlojamiento] = useState();
   const [titulo, setTitulo] = useState();
   const [descripcion, setDescripcion] = useState();
   const [habitaciones, setHabitaciones] = useState();
   const [banos, setBanos] = useState();
+  const [camas, setCamas] = useState();
   const [position, setPosition] = useState([0, 0]);
   const [anfitrionNombre, setAnfitrionNombre] = useState();
   const [anfitrionApellido, setAnfitrionApellido] = useState();
@@ -34,6 +37,7 @@ const Alojamiento = () => {
   const [numMaxNinos, setNumMaxNinos] = useState();
   const [emailAnfitrion, setEmailAnfitrion] = useState();
 
+  /*Suma de 5 dias despues del dia de hoy para mostrar una fecha de reserva*/
   var fecha = new Date()
   fecha.setDate(fecha.getDate() + 5);
 
@@ -42,6 +46,7 @@ const Alojamiento = () => {
   const [adultos, setAdultos] = useState(0);
   const [ninos, setNinos] = useState(0);
   const [showPopUpViajeros2, setShowPopUpViajeros2] = useState(false);
+  const [arrayDatePicker, setArrayDatePicker] = useState([]);
 
   const onChangeFecha = (date) => {
     setDateRange(date);
@@ -51,6 +56,7 @@ const Alojamiento = () => {
     setShowPopUpViajeros2(false);
   }
 
+  /*Funcionamiento de los botones de mostrar las fotos*/
   const onClickListaMas = () => {
     document.getElementById("imagen1").style.transform = "translateX(-770px)";
     document.getElementById("imagen2").style.transform = "translateX(-770px)";
@@ -65,6 +71,7 @@ const Alojamiento = () => {
     document.getElementById("imagen4").style.transform = "translateX(0px)";
   }
 
+  /*Llamada al api para recoger los datos del alojamiento y para recoger las fechas que tiene reservadas*/
   useEffect(() => {
     axios.get("http://localhost:8080/encontrarAlojamientoPorId/" + params.alojamientoId)
       .then(response => {
@@ -73,6 +80,7 @@ const Alojamiento = () => {
         setDescripcion(response.data.descripcion);
         setHabitaciones(response.data.numeroHabitaciones);
         setBanos(response.data.numeroBanhos);
+        setCamas(response.data.numeroCamas);
         setPosition([response.data.latitud, response.data.longitud]);
         setAnfitrionNombre(response.data.anfitrion.nombre);
         setAnfitrionApellido(response.data.anfitrion.apellidos);
@@ -87,16 +95,52 @@ const Alojamiento = () => {
         setNumMaxAdultos(response.data.numMaxAdultos);
         setNumMaxNinos(response.data.numMaxNinhos);
         setEmailAnfitrion(response.data.anfitrion.email);
+        setAlojamiento(response.data);
       }
-      )
+    )
+
+    axios.get("http://localhost:8080/fechasReservadasAlojamiento/" + params.alojamientoId)
+    .then(response => {
+      console.log(response.data);
+      var datePickerIntermedio = [];
+      for (let i = 0; i < response.data.length; i++){
+        datePickerIntermedio.push({start: new Date(parsearFecha(response.data[i].desde)), end: new Date(parsearFecha(response.data[i].hasta))});
+        console.log(response.data);
+      }
+      setArrayDatePicker(datePickerIntermedio);
+    }
+    )
   }, []);
 
+  /*Para meter la fecha en el datepicker tiene que estar en un formato en concreto y esta funcion lo adapta*/
+  const parsearFecha = (fecha) => {
+    let partes = fecha.split('/');
+    let dia = parseInt(partes[0], 10);
+    let mes = parseInt(partes[1], 10) - 1;
+    let anio = parseInt(partes[2], 10);
+  
+    let fechaParseada = new Date(anio, mes, dia);
+  
+    return fechaParseada;
+  }
+
+  /*Funcion que realiza la resta de los dias para calcular cuantos dias son la reserva*/
   const diferenciaDias = () => {
     if (endDate !== null && startDate !== null) {
       return (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
     } else {
       return 0;
     }
+  }
+
+  /*Llamada al api para poder realizar la reserva mandando los datos necesarios*/
+  const reservar = () => {
+    /*por hacer*/
+  }
+
+  /*Llevar al usuario a iniciar sesion en el caso de que no lo este*/
+  const login = () => {
+    navigate("/login");
   }
 
   return (
@@ -128,7 +172,7 @@ const Alojamiento = () => {
             <h2>Caracteristicas:</h2>
             <div className='carteles'>
               <div>{habitaciones} habitacion/es</div>
-              <div>3 camas</div>
+              <div>{camas} camas</div>
               <div>{banos} baño/s</div>
             </div>
 
@@ -136,8 +180,7 @@ const Alojamiento = () => {
             <DatePicker dateFormat="dd/MM/yyyy" todayButton="Hoy" shouldCloseOnSelect={false} selected={startDate} onChange={onChangeFecha}
               minDate={new Date()} showDisabledMonthNavigation startDate={startDate} endDate={endDate} monthsShown={2}
               selectsRange={true} isClearable={true} placeholderText="Inserta fecha" showIcon locale="es" inline
-              excludeDateIntervals={[{ start: subDays(new Date("2023-06-15"), 0), end: addDays(new Date("2023-06-18"), 0) },
-              { start: subDays(new Date("2023-06-25"), 0), end: addDays(new Date("2023-06-28"), 0) }]} />
+              excludeDateIntervals={(arrayDatePicker!=[])?arrayDatePicker:[]} />
 
             <h2>Mapa:</h2>
             <div className='mapa'>
@@ -166,7 +209,9 @@ const Alojamiento = () => {
         <div className='alojamientoDerecha'>
           <div className='reserva'>
             <p>Precio: {precio}€</p>
-            <button className='botonReserva'>Reservar</button>
+            {(localStorage.getItem("token")!=null)
+            ?<button onClick={reservar} className='botonReserva'>Reservar</button>
+            :<button onClick={login} className='botonReservaNoLogin'>Para poder reservar un alojamiento debes tener la sesion iniciada</button>}
           </div>
 
           <div className='contDerechaAlojamiento'>

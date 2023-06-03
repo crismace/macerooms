@@ -129,7 +129,7 @@
     background-color: #FFF5E4;
     margin: 0px auto;
     padding-top: 20px;
-    height: 210vh;
+    height: 250vh;
     width: 520px;
     display: flex;
     justify-content: space-around;
@@ -139,11 +139,15 @@
     width: 50%;
 }
 
-.botonReserva, .calculadora .boton, .contacto {
+.botonReserva, .calculadora .boton, .contacto, .botonReservaNoLogin {
     background-color: #ffe4e1;
     border: 1px solid black;
     padding: 10px;
     cursor: pointer;
+}
+
+.botonReservaNoLogin{
+    width: 200px;
 }
 
 .calculadora {
