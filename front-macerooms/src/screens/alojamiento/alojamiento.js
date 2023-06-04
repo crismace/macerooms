@@ -47,6 +47,7 @@ const Alojamiento = (props) => {
   const [ninos, setNinos] = useState(0);
   const [showPopUpViajeros2, setShowPopUpViajeros2] = useState(false);
   const [arrayDatePicker, setArrayDatePicker] = useState([]);
+  const [datosValidos, setDatosValidos] = useState();
 
   const onChangeFecha = (date) => {
     setDateRange(date);
@@ -108,8 +109,7 @@ const Alojamiento = (props) => {
         console.log(response.data);
       }
       setArrayDatePicker(datePickerIntermedio);
-    }
-    )
+    })
   }, []);
 
   /*Para meter la fecha en el datepicker tiene que estar en un formato en concreto y esta funcion lo adapta*/
@@ -127,7 +127,14 @@ const Alojamiento = (props) => {
   /*Funcion que realiza la resta de los dias para calcular cuantos dias son la reserva*/
   const diferenciaDias = () => {
     if (endDate !== null && startDate !== null) {
-      return (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
+      var diferencia = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
+
+      if (diferencia != 1) {
+        return diferencia - 1;
+      } else {
+        return diferencia;
+      }
+
     } else {
       return 0;
     }
@@ -135,7 +142,30 @@ const Alojamiento = (props) => {
 
   /*Llamada al api para poder realizar la reserva mandando los datos necesarios*/
   const reservar = () => {
-    /*por hacer*/
+    if((startDate != null && endDate != null) && adultos > 0){
+      axios.post("http://localhost:8080/sePuedeReservar", 
+      {
+        idAlojamiento: params.alojamientoId,
+        fechaDesde: startDate.toISOString(),
+        fechaHasta: endDate.toISOString()
+      })
+      .then(response => {
+        if(response.data == true){
+          props.setDatosReserva({
+            idAlojamiento: params.alojamientoId,
+            fechaDesde: startDate.getDate()+"/"+(startDate.getMonth()+1)+"/"+startDate.getFullYear(),
+            fechaHasta: endDate.getDate()+"/"+(endDate.getMonth()+1)+"/"+endDate.getFullYear(),
+            diferenciaDias: diferenciaDias(),
+            numeroAdultos:adultos,
+            numeroNinhos:ninos,
+            alojamiento:alojamiento
+          });
+          navigate("/reserva");
+        }
+      })
+    } else {
+      setDatosValidos("Selecciona datos de reserva validos, por favor");
+    }
   }
 
   /*Llevar al usuario a iniciar sesion en el caso de que no lo este*/
@@ -212,11 +242,12 @@ const Alojamiento = (props) => {
             {(localStorage.getItem("token")!=null)
             ?<button onClick={reservar} className='botonReserva'>Reservar</button>
             :<button onClick={login} className='botonReservaNoLogin'>Para poder reservar un alojamiento debes tener la sesion iniciada</button>}
+            <p className='datosValidos'>{datosValidos}</p>
           </div>
 
           <div className='contDerechaAlojamiento'>
             <div className='calculadora'>
-              <DatePicker id="paquito" className='paquito' dateFormat="dd/MM/yyyy" todayButton="Hoy" shouldCloseOnSelect={true} onChange={onChangeFecha}
+              <DatePicker dateFormat="dd/MM/yyyy" todayButton="Hoy" shouldCloseOnSelect={true} onChange={onChangeFecha}
                 minDate={new Date()} showDisabledMonthNavigation startDate={startDate} endDate={endDate} monthsShown={2}
                 selectsRange={true} isClearable={true} showIcon locale="es" />
 
@@ -229,7 +260,7 @@ const Alojamiento = (props) => {
               <hr></hr>
 
               <div>
-                <p>Precio x {diferenciaDias()} dias: {diferenciaDias() * precio}€</p>
+                <p>Precio x {diferenciaDias()} noches: {diferenciaDias() * precio}€</p>
                 <p>Gastos de limpieza: {limpieza}€</p>
                 <p>Comision: {comision}€</p>
               </div>
@@ -237,7 +268,7 @@ const Alojamiento = (props) => {
 
             <hr></hr>
 
-            <p>Total:{(diferenciaDias() * precio) + limpieza + comision} €</p>
+            <p>Total: {(diferenciaDias() * precio) + limpieza + comision} €</p>
           </div>
         </div>
       </div>
