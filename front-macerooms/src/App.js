@@ -5,6 +5,7 @@ import Container from './screens/container/container';
 import Login from './screens/login/login';
 import Register from './screens/register/register';
 import Alojamiento from './screens/alojamiento/alojamiento';
+import Perfil from './screens/perfil/perfil';
 import Reserva from './screens/reserva/reserva';
 import Busqueda from './screens/busqueda/busqueda';
 import ReservaConfirmada from './screens/reservaConfirmada/reservaConfirmada';
@@ -38,6 +39,7 @@ function App() {
         <Route path="login" element={<Login/>}></Route>
         <Route path="registro" element={<Register/>}></Route>
         <Route path="alojamiento/:alojamientoId" element={<Alojamiento datosReserva={datosReserva} setDatosReserva={setDatosReserva}/>}></Route>
+        <Route path="perfil" element={<Perfil/>}></Route>
         <Route path="busqueda" element={<Busqueda resultado={resultado} setResultado={setResultado}/>}></Route>
         <Route path="reserva" element={<Reserva datosReserva={datosReserva} setDatosReserva={setDatosReserva}/>}></Route>
         <Route path="reserva/confirmada" element={<ReservaConfirmada/>}></Route>
