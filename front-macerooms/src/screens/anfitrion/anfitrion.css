@@ -1,0 +1,33 @@
+.contAnfitrion {
+    margin: 5% 10%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+}
+
+.fotos {
+    display: flex;
+}
+
+.contAnfitrion .fotos img {
+    width: 440px;
+    height: 658px;
+}
+
+.contAnfitrion .fotos img:last-child {
+    width: 540px;
+    height: 327px;
+    margin-left: -300px;
+    margin-top: 420px;
+}
+
+.contAnfitrion button {
+    padding: 50px;
+    background-color: #ffe4e1;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 30%;
+    margin-top: 10%;
+    font-size: 16px;
+    cursor: pointer;
+}

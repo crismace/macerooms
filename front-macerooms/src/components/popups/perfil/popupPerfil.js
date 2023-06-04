@@ -1,12 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
+import axios from 'axios';
 import '../perfil/popupPerfil.css'
 
 const PopUpPerfil = ({isOpen, onClose, logged}) => {
     const navigate = useNavigate();
     const perfil = useRef(null);
+    const [anfitrion, setAnfitrion] = useState(false);
 
 
     const handleClose = () => {
@@ -17,8 +20,8 @@ const PopUpPerfil = ({isOpen, onClose, logged}) => {
         e.preventDefault();
 
         localStorage.removeItem('token');
-        window.location.reload(true);
         navigate("/");
+        window.location.reload(true);
     }
 
     /*Hook que cierra el popup cuando se clicka fuera*/
@@ -30,6 +33,15 @@ const PopUpPerfil = ({isOpen, onClose, logged}) => {
         };
     
         document.addEventListener('mousedown', handleClickOutside);
+
+        if (localStorage.getItem('token') != null) {
+            axios.post("http://localhost:8080/esAnfitrion", { token: localStorage.getItem('token')})
+            .then(response => {
+                setAnfitrion(response.data);
+                console.log(response.data);
+            }
+            )
+        }
     }, []);
 
     return(
@@ -50,7 +62,11 @@ const PopUpPerfil = ({isOpen, onClose, logged}) => {
                     <div hidden={!logged} onClick={onClickCerrarSesion}>Cerrar sesión</div>
                 </div>
 
-                <div>Conviertete en anfitrión</div>
+                <div className='anfitrion'>
+                    <div hidden={anfitrion} onClick={() => navigate("/anfitrion")}>Conviertete en anfitrión</div>
+                    <div hidden={!anfitrion} onClick={() => navigate("/crearAlojamiento")}>Crear alojamiento</div>
+                </div>
+
             </div>
             
             }
