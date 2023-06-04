@@ -1,0 +1,55 @@
+.contReserva {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%;
+    margin-right: 2%;
+    margin-left: 2%;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #ffe4e1;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.contReserva:hover {
+    background-color: #FFF5E4;
+}
+
+.contReserva p:first-child {
+    border-bottom: 1px solid black;
+}
+
+.contReserva img {
+    width: 200px;
+    height: auto;
+}
+
+.green {
+    font-weight: 600;
+    color: green;
+}
+
+.red {
+    font-weight: 600;
+    color: red;
+}
+
+.botonesReservas {
+    display: flex;
+}
+
+.cancelar, .validar, .rechazar {
+    height: 30px;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.rechazar, .cancelar {
+    background-color: lightcoral;
+}
+
+.validar {
+    background-color: lightgreen;
+    margin-right: 20px;
+}

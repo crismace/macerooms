@@ -1,0 +1,42 @@
+.alojamientoAnfitrion {
+    border: 2px solid #ffe4e1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%;
+    margin-right: 2%;
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+.alojamientoAnfitrion:hover {
+    background-color: #FFF5E4;
+}
+
+.alojamientoAnfitrionTitulo{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.alojamientoAnfitrionImagen{
+    height: 200px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.iconoAlojamientoAnfitrionBorrar, .iconoAlojamientoAnfitrion {
+    font-size: 40px;
+    padding: 20px;
+}
+
+.iconoAlojamientoAnfitrion{
+    color: #fdc666;
+}
+
+.iconoAlojamientoAnfitrionBorrar {
+    color: red;
+}
