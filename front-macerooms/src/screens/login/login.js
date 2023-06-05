@@ -37,7 +37,6 @@ const Login = () => {
         })
         .then(response => {
             localStorage.setItem('token', response.data);
-            console.log(response.data);
             navigate("/");
             window.location.reload(true);
         }).catch(err => {

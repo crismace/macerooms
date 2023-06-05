@@ -12,7 +12,6 @@ const Inicio = () => {
     useEffect(() => {
         axios.get("http://localhost:8080/buscarAlojamientosInicio")
             .then(response => {
-                console.log(response.data);
                 setAlojamientos(response.data);
             }
         )

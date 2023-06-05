@@ -61,8 +61,8 @@ const Register = () => {
         })
         .then(response => {
             localStorage.setItem('token', response.data);
-            console.log(response.data);
             navigate("/");
+            window.location.reload(true);
         }).catch(err => {
             if (err.response.status == 400) {
                 setError("Faltan parámetros");

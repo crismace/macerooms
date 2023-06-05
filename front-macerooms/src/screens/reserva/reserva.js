@@ -52,7 +52,7 @@ const Reserva = (props) => {
             <p><span className='confirmarTitulo'>IVA - {props.datosReserva.alojamiento.iva}%:</span> {ivaCalculo} €</p>
           </div>
 
-          <p><span className='confirmarTitulo'>Gastos de limpieza:</span> {props.datosReserva.alojamiento.gastosLimpieza}</p>
+          <p><span className='confirmarTitulo'>Gastos de limpieza:</span> {props.datosReserva.alojamiento.gastosLimpieza} €</p>
 
           <p><span className='confirmarTitulo'>Comisión:</span> {props.datosReserva.alojamiento.comision} €</p>
 

@@ -1,5 +1,6 @@
 .contNotFound {
-    background-color: #FDCFDF;
+    background-color: mistyrose;
+    border:3px solid #FFC4C4;
     width: 40%;
     height: 200px;
     margin: auto;
@@ -18,15 +19,13 @@
 }
 
 .contNotFound button {
-    background-color: #BCE6EB;
+    background-color: white;
     padding: 20px;
-    border: 1px solid grey;
+    border:3px solid #FFC4C4;
     border-radius: 5px;
     font-weight: 500;
 }
 
 .contNotFound button:hover {
-    background-color: transparent;
-    color: black;
-    border-color: black;
+    background-color: #FFF5E4;
 }
