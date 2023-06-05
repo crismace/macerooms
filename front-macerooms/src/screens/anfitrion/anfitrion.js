@@ -6,7 +6,7 @@ const Anfitrion = () => {
     const navigate = useNavigate();
 
     const onClickFormulario = () => {
-
+        navigate("formulario");
     }
 
     const onClickLogin = () => {

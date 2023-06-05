@@ -13,7 +13,7 @@ const AlojamientoAnfitrion = (props) => {
   }
 
   const editar = () => {
-
+    navigate("/alojamientoEdicion/" + props.alojamiento.id);
   }
 
   const eliminar = () => {
