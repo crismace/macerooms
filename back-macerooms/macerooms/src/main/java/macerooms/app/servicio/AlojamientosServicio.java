@@ -205,6 +205,7 @@ public class AlojamientosServicio {
 
 	public ResponseEntity<Boolean> borrar(Long id) {
 		System.out.println("se borra alojamiento con id : "+id);
+		reservaRepositorio.deleteReservaByAlojamientoId(id);
 		alojamientosRepositorio.deleteById(id);
 		return ResponseEntity.ok(alojamientosRepositorio.findById(id).isPresent());
 	}

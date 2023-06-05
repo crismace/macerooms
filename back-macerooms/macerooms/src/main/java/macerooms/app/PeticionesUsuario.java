@@ -51,7 +51,15 @@ public class PeticionesUsuario {
 	@PostMapping("/esAnfitrion")
 	public ResponseEntity<Boolean> esAnfitrion(@RequestBody Map<String,String> json){
 		Boolean esAnfitrion = servicio.esAnfitrion(json.get("token"));
+		if(esAnfitrion == null) {
+			esAnfitrion = false;
+		}
 		return ResponseEntity.ok(esAnfitrion);
+	}
+	
+	@PostMapping("/cambiarClave")
+	public ResponseEntity<Boolean> cambiarClave(@RequestBody Map<String,String> json){
+		return servicio.cambiarClave(json.get("token"),json.get("claveAntigua"),json.get("claveNueva"),json.get("claveNueva2"));
 	}
 	
 }
