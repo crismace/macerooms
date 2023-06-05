@@ -1,0 +1,95 @@
+.contFormulario {
+    margin: 5% 10%;
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+}
+
+.formularioAnfitrion {
+    background-color: mistyrose;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 20px;
+}
+
+.separador1, .separador2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.subtituloAnfitrion {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.etiquetaAnfitrion {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.inputAnfitrion, .textareaAnfitrion, .selectAnfitrion {
+    width: 50%; 
+    height: 30px;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.inputAnfitrion[type="number"] {
+    width: 60px;
+}
+
+.caracteristicasContainer .inputAnfitrion, .caracteristicasContainer .etiquetaAnfitrion, .inputDinero, .dineroContainer .etiquetaAnfitrion{
+    margin-right: 20px;
+}
+
+.dineroContainer {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.inputDinero .inputAnfitrion {
+    height: 30px;
+    margin-bottom: 0px;
+}
+
+.restoFormulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 1 / span 2;
+    margin-left: 5%;
+}
+
+.restoFormulario .inputAnfitrion {
+    width: 350px;
+}
+
+.mapaAnfitrion {
+    margin-top: 20px;
+    height: 500px;
+    width: 600px;
+}
+
+.submitButton {
+    background-color: #FFC4C4;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 50px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submitButton:hover {
+    background-color: #FFF5E4;
+}

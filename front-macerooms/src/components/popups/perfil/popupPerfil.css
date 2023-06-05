@@ -8,10 +8,14 @@
     text-align: center;
 }
 
-.perfil div {
+.perfil div{
     height: 50px;
     width: 200px;
     line-height: 50px;
+}
+
+.anfitrion div {
+    line-height: 48px;
 }
 
 .registro {
