@@ -1,6 +1,7 @@
 package macerooms.app.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +68,22 @@ public class UsuarioServicio {
 
 	public Boolean esAnfitrion(String token) {
 		return userRepositorio.findByToken(token).getEsAnfitrion();
+	}
+
+	public ResponseEntity<Boolean> cambiarClave(String token, String claveAntigua, String claveNueva1, String claveNueva2) {
+		Usuario usuario = userRepositorio.findByToken(token);
+		if(claveNueva1.equals(claveNueva2)) {
+			if(BCrypt.checkpw(claveAntigua, usuario.getContrasena())) {
+				usuario.setContrasena(BCrypt.hashpw(claveNueva1, BCrypt.gensalt()));
+				userRepositorio.save(usuario);
+				return ResponseEntity.ok().body(true);
+
+			}else {
+				return ResponseEntity.badRequest().body(false);
+			}
+		}else {
+			return ResponseEntity.badRequest().body(false);
+		}
 	}
 	
 }

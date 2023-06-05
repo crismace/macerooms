@@ -56,7 +56,7 @@ public class PeticionesAlojamiento {
 	}
 	
 	@GetMapping("/buscarAlojamientosInicio")
-	public ResponseEntity<Iterable<AlojamientoReducido>> registro() {
+	public ResponseEntity<Iterable<AlojamientoReducido>> buscarAlojamientosInicio() {
 		System.out.println("Se buscan alojamientos inicio");
 		// Busca todos los alojamientos para la pantalla principal
 		return ResponseEntity.ok(servicio.alojamientosPantallaPrincipal());

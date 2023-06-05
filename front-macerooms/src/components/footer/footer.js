@@ -2,7 +2,6 @@ import React from "react";
 import '../footer/footer.css'
 
 const Footer = () => {
-    /*las redes van a ser iconos*/
     return(
         <div className="contFooter">
             <div className="redes">

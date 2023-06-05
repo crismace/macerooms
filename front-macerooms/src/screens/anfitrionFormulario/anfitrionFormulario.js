@@ -59,13 +59,18 @@ const AnfitrionFormulario = () => {
 
     if (modoUpdate) {
       id = params.alojamientoId;
+      var cambiar = false; 
+      if(position[0]==null){
+        cambiar = true;
+      }
+
       await axios.put('http://localhost:8080/actualizarAlojamiento/'+params.alojamientoId,
         {
           "titulo": titulo,
           "descripcion": descripcion,
           "normas": normas,
-          "latitud": position.lat,
-          "longitud": position.lng,
+          "latitud": cambiar?position.lat:position[0],
+          "longitud": cambiar?position.lng:position[1],
           "numMaxAdultos": numMaxAdultos,
           "numMaxNinhos": numMaxNinhos,
           "numeroBanhos": numeroBanhos,
